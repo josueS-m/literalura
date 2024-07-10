@@ -9,10 +9,7 @@ import com.aluracursos.literalura.repository.BookRepository;
 import com.aluracursos.literalura.service.APIConsumption;
 import com.aluracursos.literalura.service.ConvertData;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -46,6 +43,11 @@ public class Principal {
                     4 - Listar autores vivos en un determinado año
                     5 - Listar libros por idioma                    
                     6 - Mostrar estadísticas de libros por idioma
+                    7 - Generar estadísticas de descargas
+                    8 - Top 10 libros más descargados
+                    9 - Buscar autor por nombre
+                    10 - Listar autores por rango de año de nacimiento
+                    11 - Listar autores por rango de año de fallecimiento
                     0 - Salir
                     ----------------------------------------------
                     """;
@@ -73,6 +75,21 @@ public class Principal {
                         break;
                     case 6:
                         showBookStatisticsByLanguage();
+                        break;
+                    case 7:
+                        generateDownloadStatistics();
+                        break;
+                    case 8:
+                        top10MostDownloadedBooks();
+                        break;
+                    case 9:
+                        searchAuthorByName();
+                        break;
+                    case 10:
+                        listAuthorsByBirthYearRange();
+                        break;
+                    case 11:
+                        listAuthorsByDeathYearRange();
                         break;
                     case 0:
                         System.out.println("Cerrando Literalura...");
@@ -224,6 +241,91 @@ public class Principal {
                 return "portugués";
             default:
                 return "desconocido";
+        }
+    }
+
+    // Método para generar estadísticas de descargas
+    private void generateDownloadStatistics() {
+        DoubleSummaryStatistics stats = bookRepository.findAll().stream()
+                .collect(Collectors.summarizingDouble(Book::getNumeroDescargas));
+
+        System.out.println("Estadísticas de descargas:");
+        System.out.println("Número total de descargas: " + stats.getSum());
+        System.out.println("Promedio de descargas: " + stats.getAverage());
+        System.out.println("Máximo de descargas: " + stats.getMax());
+        System.out.println("Mínimo de descargas: " + stats.getMin());
+    }
+
+    private void top10MostDownloadedBooks() {
+        List<Book> top10Books = bookRepository.findTop10ByOrderByNumeroDescargasDesc();
+        System.out.println("Top 10 libros más descargados:");
+        top10Books.forEach(System.out::println);
+    }
+
+    private void searchAuthorByName() {
+        System.out.println("Ingrese el nombre del autor: ");
+        String nombreAutor = scanner.nextLine();
+
+        List<Authors> autores = authorRepository.findByNombreContainingIgnoreCase(nombreAutor);
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores con ese nombre.");
+        } else {
+            autores.forEach(author -> {
+                List<String> titulos = author.getBooks().stream()
+                        .map(Book::getTitulo)
+                        .collect(Collectors.toList());
+                System.out.println("--------------------------" +
+                        "\nAutor: " + author.getNombre() +
+                        "\nFecha de nacimiento: " + author.getFechaDeNacimiento() +
+                        "\nFecha de fallecimiento: " + author.getFechaDeFallecimiento() +
+                        "\nLibros: " + titulos + "\n");
+            });
+        }
+    }
+
+    private void listAuthorsByBirthYearRange() {
+        System.out.println("Ingrese el año de inicio del rango de nacimiento: ");
+        String yearStart = scanner.nextLine();
+        System.out.println("Ingrese el año de fin del rango de nacimiento: ");
+        String yearEnd = scanner.nextLine();
+
+        List<Authors> autores = authorRepository.findByYearOfBirthRange(yearStart, yearEnd);
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores nacidos en ese rango de años.");
+        } else {
+            autores.forEach(author -> {
+                List<String> titulos = author.getBooks().stream()
+                        .map(Book::getTitulo)
+                        .collect(Collectors.toList());
+                System.out.println("--------------------------" +
+                        "\nAutor: " + author.getNombre() +
+                        "\nFecha de nacimiento: " + author.getFechaDeNacimiento() +
+                        "\nFecha de fallecimiento: " + author.getFechaDeFallecimiento() +
+                        "\nLibros: " + titulos + "\n");
+            });
+        }
+    }
+
+    private void listAuthorsByDeathYearRange() {
+        System.out.println("Ingrese el año de inicio del rango de fallecimiento: ");
+        String yearStart = scanner.nextLine();
+        System.out.println("Ingrese el año de fin del rango de fallecimiento: ");
+        String yearEnd = scanner.nextLine();
+
+        List<Authors> autores = authorRepository.findByYearOfDeathRange(yearStart, yearEnd);
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores fallecidos en ese rango de años.");
+        } else {
+            autores.forEach(author -> {
+                List<String> titulos = author.getBooks().stream()
+                        .map(Book::getTitulo)
+                        .collect(Collectors.toList());
+                System.out.println("--------------------------" +
+                        "\nAutor: " + author.getNombre() +
+                        "\nFecha de nacimiento: " + author.getFechaDeNacimiento() +
+                        "\nFecha de fallecimiento: " + author.getFechaDeFallecimiento() +
+                        "\nLibros: " + titulos + "\n");
+            });
         }
     }
 }

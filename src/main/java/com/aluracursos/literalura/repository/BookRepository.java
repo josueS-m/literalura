@@ -14,6 +14,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     List<Book> findByIdioma(String idioma);
     // Método para contar libros por idioma
     Long countByIdioma(String idioma);
+    @Query("SELECT b FROM Book b ORDER BY b.numeroDescargas DESC")
+    List<Book> findTop10ByOrderByNumeroDescargasDesc();
 
     @Query("SELECT b FROM Book b JOIN b.autor a WHERE a.nombre ILIKE %:autor")
     List<Authors> findByAuthor(String autor);
