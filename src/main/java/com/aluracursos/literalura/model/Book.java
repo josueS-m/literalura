@@ -25,7 +25,6 @@ public class Book {
 
     public Book(BookData bookData) {
         this.titulo = bookData.titulo();
-        // Consideramos solo el primer autor
         AuthorsData firstAuthorData = bookData.autor().get(0);
         this.autor = new Authors(firstAuthorData.name(), firstAuthorData.birthYear(), firstAuthorData.deathYear());
         this.idioma = String.join(", ", bookData.idioma());

@@ -105,6 +105,7 @@ public class Principal {
     }
 
     private Optional<BookData> getDataBooks(String titleBook) {
+
         var json = consumption.getData(URL_BASE + "?search=" + titleBook.replace(" ", "+"));
         Data data = convertData.getData(json, Data.class);
         return data.results().stream()
@@ -112,7 +113,9 @@ public class Principal {
                 .findFirst();
     }
 
+    //Metodo para buscar libros por titulo
     private void searchBookByTitle() {
+
         System.out.println("Ingrese el nombre del libro: ");
         var titleBook = scanner.nextLine();
 
@@ -149,12 +152,14 @@ public class Principal {
         }
     }
 
+    //Metodo para mostrar libros registrados
     private void registeredBooks() {
 
         books = bookRepository.findAll();
         books.forEach(System.out::println);
     }
 
+    //Metodo para mostrar autores registrados
     private void registeredAuthors() {
 
         authors = authorRepository.findAll();
@@ -171,7 +176,9 @@ public class Principal {
         });
     }
 
+    //Metodo para mostrar autores vivos en un determinado año
     private void ListAuthorsForYear() {
+
         System.out.println("Ingrese el año para listar los autores vivos: ");
         String yearInput = scanner.nextLine();
 
@@ -194,6 +201,7 @@ public class Principal {
 
     }
 
+    //Metodo para mostrar libros por idioma
     private void booksForLanguage() {
 
         var menuLanguage = """
@@ -219,17 +227,48 @@ public class Principal {
         }
     }
 
+    //Método para ver estadsticas de libro por idioma
     private void showBookStatisticsByLanguage() {
-        String[] idiomas = {"es", "en"}; // Podemos añadir más idiomas si es necesario
 
+        var code = """
+                ------------------------------------------                
+                Códigos:
+                    es - español
+                    en - inglés
+                    fr - francés
+                    pt - portugués
+                -------------------------------------------------------------------------------------------------------------
+                Ingrese el código del idioma para ver las estadísticas, o 'todos' para ver estadísticas de todos los idiomas:
+                """;
+        System.out.println(code);
+        String languageInput = scanner.nextLine().trim().toLowerCase();
+
+        if (languageInput.equals("todos")) {
+            showStatisticsForAllLanguages();
+        } else {
+            showStatisticsForSpecificLanguage(languageInput);
+        }
+    }
+
+    //Método para las estadísticas por idioma en espeficifo
+    private void showStatisticsForSpecificLanguage(String language) {
+
+        long count = bookRepository.countByIdioma(language);
+        System.out.println("Cantidad de libros en " + getLanguageName(language) + ": " + count);
+    }
+
+    //Metodo para las estadisticas de todos los idiomas
+    private void showStatisticsForAllLanguages() {
+
+        List<String> idiomas = Arrays.asList("es", "en", "fr", "pt"); // Añadir más idiomas si es necesario
         for (String idioma : idiomas) {
-            long count = bookRepository.countByIdioma(idioma);
-            System.out.println("Cantidad de libros en " + getLanguageName(idioma) + ": " + count);
+            showStatisticsForSpecificLanguage(idioma);
         }
     }
 
     // Método auxiliar para obtener el nombre del idioma
     private String getLanguageName(String languageCode) {
+
         switch (languageCode) {
             case "es":
                 return "español";
@@ -246,6 +285,7 @@ public class Principal {
 
     // Método para generar estadísticas de descargas
     private void generateDownloadStatistics() {
+
         DoubleSummaryStatistics stats = bookRepository.findAll().stream()
                 .collect(Collectors.summarizingDouble(Book::getNumeroDescargas));
 
@@ -262,7 +302,9 @@ public class Principal {
         top10Books.forEach(System.out::println);
     }
 
+    //Método para buscar autor por nombre
     private void searchAuthorByName() {
+
         System.out.println("Ingrese el nombre del autor: ");
         String nombreAutor = scanner.nextLine();
 
@@ -283,7 +325,9 @@ public class Principal {
         }
     }
 
+    //Método para buscar autor por año de nacimiento
     private void listAuthorsByBirthYearRange() {
+
         System.out.println("Ingrese el año de inicio del rango de nacimiento: ");
         String yearStart = scanner.nextLine();
         System.out.println("Ingrese el año de fin del rango de nacimiento: ");
@@ -306,7 +350,9 @@ public class Principal {
         }
     }
 
+    //Método para buscar autor por año de fallecimiento
     private void listAuthorsByDeathYearRange() {
+
         System.out.println("Ingrese el año de inicio del rango de fallecimiento: ");
         String yearStart = scanner.nextLine();
         System.out.println("Ingrese el año de fin del rango de fallecimiento: ");

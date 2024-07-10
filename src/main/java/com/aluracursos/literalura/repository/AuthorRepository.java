@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Authors, Long> {
 
     Optional<Authors> findByNombre(String nombre);
+
     List<Authors> findByFechaDeNacimientoLessThanEqualAndFechaDeFallecimientoIsNullOrFechaDeFallecimientoGreaterThanEqualAndFechaDeNacimientoLessThanEqual(String yearOfBirth1, String yearOfDeath, String yearOfBirth2);
 
     @Query("SELECT a FROM Authors a WHERE LOWER(a.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))")
