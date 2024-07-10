@@ -265,7 +265,7 @@ public class Principal {
             showStatisticsForSpecificLanguage(idioma);
         }
     }
-
+   
     // Método auxiliar para obtener el nombre del idioma
     private String getLanguageName(String languageCode) {
 
