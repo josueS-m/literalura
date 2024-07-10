@@ -14,10 +14,10 @@ Literalura es una aplicación desarrollada en Java utilizando Spring Boot y Spri
 - **Mostrar estadísticas de libros por idioma**: Muestra estadísticas sobre la cantidad de libros en diferentes idiomas en la base de datos.
 - **Generar estadísticas de descargas:** Utiliza DoubleSummaryStatistics para mostrar estadísticas detalladas sobre las descargas de los libros almacenados.
 - **Top 10 libros más descargados**: Muestra los 10 libros más descargados basado en el número de descargas.
-- **Buscar autor por nombre**: Permite buscar autores en la base de datos por su nombre, utilizando consultas que buscan coincidencias parciales en el nombre del autor.
-- **Listar autores por rango de año de nacimiento**: Permite listar los autores según un rango de años de nacimiento especificado.
-- **Listar autores por rango de año de fallecimiento**: Permite listar los autores según un rango de años de fallecimiento especificado.
-
+- **Buscar autor por nombre**: Permite buscar un autor por su nombre. Muestra la información del autor y los títulos de sus libros.
+- **Listar autores por rango de año de nacimiento**: Permite ingresar un rango de años y muestra los autores nacidos en ese rango.
+- **Listar autores por rango de año de fallecimiento**: Permite ingresar un rango de años y muestra los autores fallecidos en ese rango.
+  
 ## Tecnologías Utilizadas
 - Java
 - Spring Boot
@@ -52,7 +52,8 @@ Literalura es una aplicación desarrollada en Java utilizando Spring Boot y Spri
         ```
 
 3. **Compilar y ejecutar la aplicación:**
-    ```bash    
+    ```bash
+    mvn clean install
     mvn spring-boot:run
     ```
 
@@ -62,56 +63,61 @@ Una vez que la aplicación esté en funcionamiento, se presentará un menú con 
 
 ```plaintext
 ---------------Menú de Opciones---------------
-
+                    
 1 - Buscar libro por título
 2 - Listar libros registrados
 3 - Listar autores registrados
 4 - Listar autores vivos en un determinado año
-5 - Listar libros por idioma
+5 - Listar libros por idioma                    
 6 - Mostrar estadísticas de libros por idioma
+7 - Generar estadísticas de descargas
+8 - Top 10 libros más descargados
+9 - Buscar autor por nombre
+10 - Listar autores por rango de año de nacimiento
+11 - Listar autores por rango de año de fallecimiento
 0 - Salir
 ----------------------------------------------
 
 Ejemplo de uso:
 
+    Para ver un ejemplo de cómo utilizar la aplicación, sigue estos pasos:
+
     Buscar libro por título:
-        Seleccione la opción 1.
-        Ingrese el título del libro.
-        La aplicación buscará el libro en la API de Gutendex y registrará la información del libro y su autor en la base de datos.
+        Selecciona la opción 1.
+        Ingresa el título del libro que deseas buscar (por ejemplo, "Moby Dick").
 
     Listar libros registrados:
-        Seleccione la opción 2.
-        La aplicación mostrará una lista de todos los libros registrados en la base de datos.
+        Selecciona la opción 2.
 
     Listar autores registrados:
-        Seleccione la opción 3.
-        La aplicación mostrará una lista de todos los autores registrados junto con sus libros.
+        Selecciona la opción 3.
 
     Listar autores vivos en un determinado año:
-        Seleccione la opción 4.
-        Ingrese el año para listar los autores vivos en ese año.
+        Selecciona la opción 4.
+        Ingresa el año deseado (por ejemplo, 1900).
 
     Listar libros por idioma:
-        Seleccione la opción 5.
-        Ingrese el código del idioma (es, en, fr, pt).
+        Selecciona la opción 5.
+        Ingresa el código del idioma (por ejemplo, es para español).
 
     Mostrar estadísticas de libros por idioma:
-        Seleccione la opción 6.
-        La aplicación mostrará las estadísticas de la cantidad de libros en diferentes idiomas.
-
-Opciones adicionales:
+        Selecciona la opción 6.
+        Ingresa el código del idioma (por ejemplo, en para inglés) o todos para ver estadísticas de todos los idiomas.
 
     Generar estadísticas de descargas:
-        Utiliza DoubleSummaryStatistics para mostrar estadísticas detalladas sobre las descargas de los libros almacenados.
+        Selecciona la opción 7.
 
     Top 10 libros más descargados:
-        Muestra los 10 libros más descargados basados en el número total de descargas.
+        Selecciona la opción 8.
 
     Buscar autor por nombre:
-        Permite buscar autores en la base de datos por su nombre utilizando consultas que buscan coincidencias parciales en el nombre del autor.
+        Selecciona la opción 9.
+        Ingresa el nombre del autor (por ejemplo, "Mark Twain").
 
     Listar autores por rango de año de nacimiento:
-        Permite listar los autores según un rango de años de nacimiento especificado.
+        Selecciona la opción 10.
+        Ingresa el año de inicio y fin del rango (por ejemplo, 1800 y 1850).
 
     Listar autores por rango de año de fallecimiento:
-        Permite listar los autores según un rango de años de fallecimiento especificado.
+        Selecciona la opción 11.
+        Ingresa el año de inicio y fin del rango (por ejemplo, 1900 y 1950).
