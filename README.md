@@ -1,8 +1,8 @@
-# Gestión de Libros y Autores
+# Literalura: Gestión de Libros y Autores
 
 ## Descripción del Proyecto
 
-Este proyecto es una aplicación Java basada en Spring Boot que permite la gestión de libros y autores utilizando una base de datos PostgreSQL. El sistema permite buscar libros por título, listar libros registrados, listar autores registrados, listar autores vivos en un año específico, listar libros por idioma y mostrar estadísticas de libros por idioma.
+Literalura es una aplicación desarrollada en Java utilizando Spring Boot y Spring Data JPA, diseñada para gestionar información sobre libros y autores. La aplicación permite realizar consultas a una API externa (Gutendex) para obtener datos de libros y autores, almacenarlos en una base de datos PostgreSQL y proporcionar diversas funcionalidades interactivas para el usuario.
 
 ## Funcionalidades
 
@@ -12,6 +12,18 @@ Este proyecto es una aplicación Java basada en Spring Boot que permite la gesti
 - **Listar autores vivos en un determinado año**: Muestra una lista de autores que estaban vivos en un año específico.
 - **Listar libros por idioma**: Permite buscar libros por su idioma.
 - **Mostrar estadísticas de libros por idioma**: Muestra estadísticas sobre la cantidad de libros en diferentes idiomas en la base de datos.
+- **Generar estadísticas de descargas:** Utiliza DoubleSummaryStatistics para mostrar estadísticas detalladas sobre las descargas de los libros almacenados.
+- **Top 10 libros más descargados**: Muestra los 10 libros más descargados basado en el número de descargas.
+- **Buscar autor por nombre**: Permite buscar autores en la base de datos por su nombre, utilizando consultas que buscan coincidencias parciales en el nombre del autor.
+- **Listar autores por rango de año de nacimiento**: Permite listar los autores según un rango de años de nacimiento especificado.
+- **Listar autores por rango de año de fallecimiento**: Permite listar los autores según un rango de años de fallecimiento especificado.
+
+## Tecnologías Utilizadas
+- Java
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL
+- Maven
 
 ## Configuración del Entorno
 
@@ -33,15 +45,14 @@ Este proyecto es una aplicación Java basada en Spring Boot que permite la gesti
     - Crear una base de datos PostgreSQL.
     - Actualizar las configuraciones de conexión a la base de datos en `src/main/resources/application.properties`:
         ```properties
-        spring.datasource.url=jdbc:postgresql://localhost:5432/tu_base_de_datos
+        spring.datasource.url=jdbc:postgresql://localhost:tu_localhost/tu_base_de_datos
         spring.datasource.username=tu_usuario
         spring.datasource.password=tu_contraseña
         spring.jpa.hibernate.ddl-auto=update
         ```
 
 3. **Compilar y ejecutar la aplicación:**
-    ```bash
-    mvn clean install
+    ```bash    
     mvn spring-boot:run
     ```
 
@@ -87,3 +98,20 @@ Ejemplo de uso:
     Mostrar estadísticas de libros por idioma:
         Seleccione la opción 6.
         La aplicación mostrará las estadísticas de la cantidad de libros en diferentes idiomas.
+
+Opciones adicionales:
+
+    Generar estadísticas de descargas:
+        Utiliza DoubleSummaryStatistics para mostrar estadísticas detalladas sobre las descargas de los libros almacenados.
+
+    Top 10 libros más descargados:
+        Muestra los 10 libros más descargados basados en el número total de descargas.
+
+    Buscar autor por nombre:
+        Permite buscar autores en la base de datos por su nombre utilizando consultas que buscan coincidencias parciales en el nombre del autor.
+
+    Listar autores por rango de año de nacimiento:
+        Permite listar los autores según un rango de años de nacimiento especificado.
+
+    Listar autores por rango de año de fallecimiento:
+        Permite listar los autores según un rango de años de fallecimiento especificado.
